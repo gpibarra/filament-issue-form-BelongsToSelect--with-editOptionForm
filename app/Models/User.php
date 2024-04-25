@@ -12,6 +12,11 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use \Illuminate\Database\Eloquent\SoftDeletes;
 
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Post::class, 'author_user_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
