@@ -39,6 +39,13 @@ class PostResource extends Resource
                     ->relationship('author', 'name')
                     ->searchable(true)
                     ->native(false)
+                    ->editOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Name')
+                            ->string()
+                            ->maxLength(255)
+                            ->required(),
+                    ])
                     ->required(),
             ])
             ->columns(1);
