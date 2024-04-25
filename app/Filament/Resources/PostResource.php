@@ -23,15 +23,48 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                Forms\Components\TextInput::make('title')
+                    ->label('Title')
+                    ->string()
+                    ->maxLength(100)
+                    ->required(),
+                Forms\Components\Textarea::make('content')
+                    ->label('Content')
+                    ->string()
+                    ->maxLength(5000)
+                    ->rows(10)
+                    ->required(),
+                Forms\Components\BelongsToSelect::make('author_user_id')
+                    ->label('Author')
+                    ->relationship('author', 'name')
+                    ->searchable(true)
+                    ->native(false)
+                    ->required(),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('content')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('author.name')
+                    ->label('Author')
+                    ->badge()
+                    ->color('info')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created')
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->filters([
                 //
